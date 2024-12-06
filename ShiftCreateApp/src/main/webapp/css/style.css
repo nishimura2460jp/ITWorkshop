@@ -1,0 +1,277 @@
+@charset "UTF-8";
+body {
+    font-family:"Kiwi Maru", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color:  #fbfef3;
+}
+
+header {
+    font-size: 1.4rem;
+    display: flex; 
+    justify-content: center; 
+    color:#00008b;
+    margin: 10px 10px;
+    padding: 5px 0;
+}
+
+h1 {
+    margin: 0rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+h3{
+    font-size: 1.2rem;
+}
+.image-container {
+    display: flex;           
+    justify-content: center; 
+    align-items: center;     
+}
+.logo{
+    display: flex;
+    width: 70%;  
+    height: auto; 
+    max-width: 210px; 
+    border-radius: 20px; 
+}
+.logo2{
+    display: flex;
+    width: 70%;  
+    height: auto; 
+    max-width: 120px; 
+    border-radius: 10px; 
+}
+main {
+    width: 60%;
+    max-width: 600px;
+   
+    margin: 0 auto;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; 
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box; 
+}
+
+legend {
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login{
+	width: 20%;
+	margin-bottom: 10px;
+	height: 20px;
+	font-size: 100%;
+}
+
+input[type="number"], 
+input[type="date"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    font: 1.1rem "Kiwi Maru";
+    flex:1;
+    background: #0000cd;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background:#1e90ff;
+    scale: 1.05;
+}
+
+.creat,.record{
+    background:#ff0000;
+    color: white;
+}
+.creat:hover, .record:hover{
+    background:#ff6347;
+    scale: 1.05;
+}
+
+
+.footer{
+    font-size: .8rem;
+    display: flex;           
+    justify-content: center; 
+     bottom: 0; 
+}
+
+#rules1,#rules2{
+    width: 40px;
+    height: 20px;
+}
+
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 17px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(13px);
+}
+
+.return-main{
+    margin: 1rem; 
+text-align: center;
+}
+.return{
+    background-color:#ffa500;
+}
+.return:hover{
+    background-color:#ffd700;
+}
+
+/* カレンダーの基本スタイル */
+#calendar-container {
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar th,
+#calendar td {
+    width: 14.2%; /* 7等分 */
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.date-cell {
+    cursor: pointer;
+}
+
+.date-cell:hover {
+    background-color: #f0f0f0;
+}
+
+/* 選択された日付のスタイル */
+.selected {
+    background-color: #ffeb3b;
+    color: #000;
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+    header {
+        font-size: 1.4rem;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.6rem; 
+    }
+
+    .logo {
+        width: 80%; /* ロゴの幅を調整 */
+        max-width: 150px; /* 最大幅を調整 */
+    }
+
+    main {
+        width: 80%;
+        padding: 1rem; 
+        display: flex;
+        justify-content: center;
+    }
+    
+    button {
+        width: 90%; /* ボタン幅を調整 */
+        padding: 12px; /* ボタンのパディングを調整 */
+        margin-bottom: 10px; /* ボタン間のマージンを追加 */
+    }
+    button:hover {
+        scale: 1.0;
+    }
+    .creat:hover, .record:hover{
+        scale: 1.0;
+    }
+    section {
+        margin-bottom: 15px; /* セクション間のマージンを調整 */
+    }
+
+    input[type="text"], 
+    input[type="number"], 
+    input[type="date"], 
+    select, 
+    textarea {
+        font-size: 1rem; /* フォントサイズを調整 */
+    }
+}

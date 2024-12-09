@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-    <%@ page import="model.User" %>
-    <% //セッションスコープからユーザー情報を取得
-    User loginUser = (User)session.getAttribute("loginUser");%>
+   
+   <%-- <%@ page import="model.User" %>
+   <%   //セッションスコープからユーザー情報を取得
+    Name name = (Name)session.getAttribute("name");%>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +19,11 @@
 
 <body>
 <h1>希望休の入力</h1>
-<% if(loginUser != null) { %>
+<% String name = (String) session.getAttribute("name"); %>
+<% if(name != null) { %>
 <p>ログインに成功しました！</p>
-<p>ようこそ！<%= loginUser.getName() %>さん</p>
-<main>
+<p>ようこそ！<%= name %> さん</p>
+<%-- <main>
 <div id="calendar-container">
 <div id="calendar-header">
  <button id="prev-month">&lt; 前の月</button>
@@ -43,15 +45,15 @@
   <tbody id="calendar-body"></tbody>
 </table>
 </div>
- </main>
+ </main> --%>
     
 <div class="return-main">
-    <button onclick="location.href='index.html'" class="return">メインメニューに戻る</button>
+    <button onclick="location.href='WelcomeServlet'" class="return">TOPに戻る</button>
 </div>
 <%} else { %>
-<p>ログインに失敗しました</p>
-<a href="index.jsp">TOPへ戻る</a>
-<% } %>
+<p>ログインに失敗しました</p> 
+<a href="WelcomeServlet">TOPへ戻る</a>
+<% } %>  
 
 <jsp:include page="footer.jsp" />
 </body>

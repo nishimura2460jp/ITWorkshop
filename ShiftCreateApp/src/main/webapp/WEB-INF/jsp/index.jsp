@@ -18,7 +18,7 @@
 <h1>シフト表 作成アプリ</h1>
 </header>
  <div class="image-container">
- <img src="images/main.jpeg" alt="可愛いロボット" class="logo">
+ <img src="images/main.jpeg" alt="ペンを持ったロボット" class="logo">
  </div>
  <main>
    <section id="main-menu">
@@ -30,7 +30,7 @@
             <h3>スタッフ&#128221;</h3>
             <a>希望休の入力</a><br>
             <button onclick="location.href='LoginServlet'" target="_blank" rel="noopener noreferrer">ログイン</button>
-            <button onclick="location.href='LoginServlet'" target="_blank" rel="noopener noreferrer">新規登録</button>
+            <button onclick="location.href='RegisterUserServlet'" target="_blank" rel="noopener noreferrer">新規登録</button>
    </section> 
  </main>
 

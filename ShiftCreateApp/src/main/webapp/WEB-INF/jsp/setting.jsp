@@ -14,7 +14,7 @@
 
 <body>
  <div class="image-container">
-        <img src="images/main.jpeg" alt="可愛いロボット" class="logo2">
+        <img src="images/main.jpeg" alt="ペンを持ったロボット" class="logo2">
     </div>
     <header>
         <h1>基本設定</h1>
@@ -121,7 +121,7 @@
     </main>
 
     <div class="return-main">
-        <button onclick="location.href='index.html'" class="return">メインメニューに戻る</button>
+        <button onclick="location.href='index.jsp'" class="return">TOPに戻る</button>
     </div>
 
     <jsp:include page="footer.jsp" />

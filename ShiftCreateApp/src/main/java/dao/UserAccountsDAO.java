@@ -28,8 +28,10 @@ public class UserAccountsDAO {
 	     // SELECT文を準備
 	      String sql = "SELECT ID, NAME, PASS FROM USERACCOUNTS WHERE NAME =? AND PASS =?";  
 	      PreparedStatement pStmt = conn.prepareStatement(sql);
-	      pStmt.setString(1, login.getName());
-	      pStmt.setString(2, login.getPass());
+	      pStmt.setString(1, login.getName().trim()); // スペースを削除);
+	      pStmt.setString(2, login.getPass().trim()); // スペースを削除);
+	      
+
 	      
 	      // SELECT文を実行し。結果表を取得
 	      ResultSet rs = pStmt.executeQuery();

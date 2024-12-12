@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
    
-   <%-- <%@ page import="model.User" %>
-   <%   //セッションスコープからユーザー情報を取得
-    Name name = (Name)session.getAttribute("name");%>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,29 +20,49 @@
 <% if(name != null) { %>
 <p>ログインに成功しました！</p>
 <p>ようこそ！<%= name %> さん</p>
-<%-- <main>
-<div id="calendar-container">
-<div id="calendar-header">
- <button id="prev-month">&lt; 前の月</button>
- <span id="current-month"></span>
- <button id="next-month">次の月 &gt;</button>
-</div>
-<table id="calendar">
-<thead>
- <tr>
-   <th>日</th>
-   <th>月</th>
-   <th>火</th>
-   <th>水</th>
-   <th>木</th>
-   <th>金</th>
-   <th>土</th>
-  </tr>
-</thead>
-  <tbody id="calendar-body"></tbody>
+<!-- 年月の表示と前月・翌月ボタン -->
+<form action="CalendarServlet" method="get">
+    <button type="submit" name="year" value="${prevYear}" >前月</button>
+    <span>${year}年 ${month}月</span>
+    <button type="submit" name="year" value="${nextYear}" >翌月</button>
+    <input type="hidden" id="month" name="month" value="${month}" />
+</form>
+
+<!-- カレンダー表示 -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+        </tr>
+    </thead>
+    <c:if test="${empty calendar}">
+    <p>カレンダーが表示できません。calendarの内容は空です。</p>
+</c:if>
+    <tbody>
+       <c:forEach var="week" items="${calendar}">
+    <tr>
+        <c:forEach var="day" items="${week}">
+            <td>
+                <c:if test="${not empty day}">
+                    <form action="SetHolidayServlet" method="post">
+                        <input type="hidden" name="year" value="${year}" />
+                        <input type="hidden" name="month" value="${month}" />
+                        <input type="hidden" name="day" value="${day}" />
+                        <input type="submit" value="${day}" />
+                    </form>
+                </c:if>
+            </td>
+        </c:forEach>
+    </tr>
+</c:forEach>
+    </tbody>
 </table>
-</div>
- </main> --%>
     
 <div class="return-main">
     <button onclick="location.href='WelcomeServlet'" class="return">TOPに戻る</button>

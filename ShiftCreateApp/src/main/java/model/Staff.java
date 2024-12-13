@@ -3,22 +3,19 @@ package model;
 import java.util.List;
 
 public class Staff {
-    private int id;
+    private int staffId;
     private String staffName;
     private int weeklyWorkDays;
     private int shiftTypeId;
-    private List<Integer> jobTypes;  // 複数選択された業務の種類
-
-    // コンストラクタ
-    public Staff() {}
+    private List<Integer> jobTypes;   // 複数選択された業務の種類（JobType ID）
 
     // ゲッター・セッター
-    public int getId() {
-        return id;
+    public int getStaffId() {
+        return staffId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStaffId(int staffId) {
+        this.staffId = staffId;
     }
 
     public String getStaffName() {

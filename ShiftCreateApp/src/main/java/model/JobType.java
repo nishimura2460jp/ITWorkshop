@@ -1,19 +1,20 @@
 package model;
 
 public class JobType {
-    private int id;
+    private int jobId;
     private String jobName;
+    private int staffRequired;
 
     // コンストラクタ
     public JobType() {}
 
     // ゲッター・セッター
-    public int getId() {
-        return id;
+    public int getJobId() {
+        return jobId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
     }
 
     public String getJobName() {
@@ -22,6 +23,14 @@ public class JobType {
 
     public void setJobName(String jobName) {
         this.jobName = jobName;
+    }
+    
+    public int getStaffRequired() {
+        return staffRequired;
+    }
+
+    public void setStaffRequired(int staffRequired) {
+        this.staffRequired = staffRequired;
     }
 }
 

@@ -40,6 +40,15 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("name", name);
 		
+			// 現在の年と月を取得
+	        java.util.Calendar cal = java.util.Calendar.getInstance();
+	        int year = cal.get(java.util.Calendar.YEAR);
+	        int month = cal.get(java.util.Calendar.MONTH); // 0-based (0 = January, 11 = December)
+
+	        // year と month をリクエスト属性として設定
+	        request.setAttribute("year", year);
+	        request.setAttribute("month", month);
+			
 		// フォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/loginResult.jsp");
 		dispatcher.forward(request, response);

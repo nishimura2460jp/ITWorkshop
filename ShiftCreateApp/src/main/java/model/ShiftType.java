@@ -1,19 +1,19 @@
 package model;
 
 public class ShiftType {
-    private int id;
+    private int shiftId;
     private String shiftName;
 
     // コンストラクタ
     public ShiftType() {}
 
     // ゲッター・セッター
-    public int getId() {
-        return id;
+    public int getShiftId() {
+        return shiftId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
     }
 
     public String getShiftName() {

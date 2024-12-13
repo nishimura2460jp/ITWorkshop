@@ -42,3 +42,531 @@ PASS VARCHAR (20) NOT NULL,
 2024-12-06 14:03:59.949700+09:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERACCOUNTS" not found (this database is empty); SQL statement:
 INSERT INTO USERACCOUNTS (NAME, PASS) VALUES('西村 淳史', '1234') [42104-232]
+2024-12-13 13:47:44.980788+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: 列 "SHIFTID" が見つかりません
+Column "SHIFTID" not found; SQL statement:
+CREATE TABLE staff (
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,   -- スタッフID (自動採番)
+    staff_name VARCHAR(255) NOT NULL,          -- スタッフ名
+    weekly_work_days INT NOT NULL,             -- 週の勤務日数
+    shift_type_id INT,                         -- シフトID (shift_typesテーブルの外部キー)
+    FOREIGN KEY (shift_type_id) REFERENCES shift_types(shiftId)   -- 外部キー制約
+) [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:786)
+	at org.h2.table.IndexColumn.mapColumns(IndexColumn.java:184)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:219)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:74)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.ddl.CommandWithColumns.createConstraints(CommandWithColumns.java:83)
+	at org.h2.command.ddl.CreateTable.update(CreateTable.java:134)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
+	at org.h2.command.Command.executeUpdate(Command.java:304)
+	at org.h2.command.Command.executeUpdate(Command.java:248)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1108)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1095)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-12-13 13:53:55.276446+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: 列 "STAFF_REQUIRED" が見つかりません
+Column "STAFF_REQUIRED" not found; SQL statement:
+INSERT INTO job_types (job_id, job_name, staff_required) VALUES
+(1, 'フロア', 2),
+(2, '送迎', 4),
+(3, '入浴', 2),
+(4, '記録', 2),
+(5, '厨房', 1),
+(6, '看護', 1),
+(7, '機能訓練', 1),
+(8, 'フリー', 1),
+(9, 'ﾌﾘｰ/送', 0.5),
+(10, 'ﾌﾘｰ/事', 0.5) [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:786)
+	at org.h2.command.Parser.parseColumn(Parser.java:1171)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1156)
+	at org.h2.command.Parser.parseInsert(Parser.java:1530)
+	at org.h2.command.Parser.parsePrepared(Parser.java:698)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:556)
+	at org.h2.command.Parser.prepareCommand(Parser.java:484)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1108)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1095)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-12-13 13:56:36.644810+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: 列 "JOBID" が見つかりません
+Column "JOBID" not found; SQL statement:
+INSERT INTO job_types (jobId, job_name, staff_required) VALUES
+(1, 'フロア', 2),
+(2, '送迎', 4),
+(3, '入浴', 2),
+(4, '記録', 2),
+(5, '厨房', 1),
+(6, '看護', 1),
+(7, '機能訓練', 1),
+(8, 'フリー', 1),
+(9, 'ﾌﾘｰ/送', 0.5),
+(10, 'ﾌﾘｰ/事', 0.5) [42122-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.getColumn(Table.java:786)
+	at org.h2.command.Parser.parseColumn(Parser.java:1171)
+	at org.h2.command.Parser.parseColumnList(Parser.java:1156)
+	at org.h2.command.Parser.parseInsert(Parser.java:1530)
+	at org.h2.command.Parser.parsePrepared(Parser.java:698)
+	at org.h2.command.Parser.parse(Parser.java:581)
+	at org.h2.command.Parser.parse(Parser.java:556)
+	at org.h2.command.Parser.prepareCommand(Parser.java:484)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1108)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1095)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-12-13 14:57:53.203095+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    [*]year INT,\000d\000a    month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),  -- ""午前休"", ""午後休"", ""全休""など\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    [*]year INT,\000d\000a    month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),  -- ""午前休"", ""午後休"", ""全休""など\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    year INT,
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),  -- "午前休", "午後休", "全休"など
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:01:17.283840+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    [*]year INT,\000d\000a    month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20), \000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    [*]year INT,\000d\000a    month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20), \000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    year INT,
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20), 
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:02:48.368506+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:03:37.355588+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:03:44.883472+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:04:46.365199+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:05:27.602393+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:05:29.084356+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:11:07.148776+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:14:19.471216+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,  -- バッククォートで囲む\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,  -- バッククォートで囲む
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:15:13.459416+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,   -- 休暇ID (自動採番)\000d\000a    staff_id INT,                                -- スタッフID\000d\000a    `year` INT,                                  -- 年 (バッククォートで囲む)\000d\000a    [*]month INT,                                   -- 月\000d\000a    day INT,                                     -- 日\000d\000a    holiday_type VARCHAR(20),                    -- 休暇の種類\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,   -- 休暇ID (自動採番)\000d\000a    staff_id INT,                                -- スタッフID\000d\000a    `year` INT,                                  -- 年 (バッククォートで囲む)\000d\000a    [*]month INT,                                   -- 月\000d\000a    day INT,                                     -- 日\000d\000a    holiday_type VARCHAR(20),                    -- 休暇の種類\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,   -- 休暇ID (自動採番)
+    staff_id INT,                                -- スタッフID
+    `year` INT,                                  -- 年 (バッククォートで囲む)
+    month INT,                                   -- 月
+    day INT,                                     -- 日
+    holiday_type VARCHAR(20),                    -- 休暇の種類
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)
+) [42001-232]
+2024-12-13 15:15:41.889888+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    `year` INT,\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    `year` INT,
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:16:26.052101+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, [*]month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, [*]month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 15:16:57.914995+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, [*]month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id))"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, [*]month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id))"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,staff_id INT, `year` INT, month INT, day INT, holiday_type VARCHAR(20), FOREIGN KEY (staff_id) REFERENCES staff(staff_id)) [42001-232]
+2024-12-13 15:18:46.538837+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 休暇ID (自動採番)\000d\000a    staff_id INT,                               -- スタッフID\000d\000a    `year` INT,                                 -- 年\000d\000a    [*]month INT,                                  -- 月\000d\000a    day INT,                                    -- 日\000d\000a    holiday_type VARCHAR(20),                   -- 休暇の種類\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 休暇ID (自動採番)\000d\000a    staff_id INT,                               -- スタッフID\000d\000a    `year` INT,                                 -- 年\000d\000a    [*]month INT,                                  -- 月\000d\000a    day INT,                                    -- 日\000d\000a    holiday_type VARCHAR(20),                   -- 休暇の種類\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 休暇ID (自動採番)
+    staff_id INT,                               -- スタッフID
+    `year` INT,                                 -- 年
+    month INT,                                  -- 月
+    day INT,                                    -- 日
+    holiday_type VARCHAR(20),                   -- 休暇の種類
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約 (staffテーブルのstaff_idを参照)
+) [42001-232]
+2024-12-13 15:20:38.274657+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays ( holiday_id INT AUTO_INCREMENT PRIMARY KEY, -- 休暇ID (自動採番) staff_id INT, -- スタッフID `year` INT, -- 年 month INT, -- 月 day INT, -- 日 holiday_type VARCHAR(20), -- 休暇の種類 FOREIGN KEY (staff_id) REFERENCES staff(staff_id) -- 外部キー制約 (staffテーブルのstaff_idを参照) );[*]"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays ( holiday_id INT AUTO_INCREMENT PRIMARY KEY, -- 休暇ID (自動採番) staff_id INT, -- スタッフID `year` INT, -- 年 month INT, -- 月 day INT, -- 日 holiday_type VARCHAR(20), -- 休暇の種類 FOREIGN KEY (staff_id) REFERENCES staff(staff_id) -- 外部キー制約 (staffテーブルのstaff_idを参照) );[*]"; expected "identifier"; SQL statement:
+CREATE TABLE holidays ( holiday_id INT AUTO_INCREMENT PRIMARY KEY, -- 休暇ID (自動採番) staff_id INT, -- スタッフID `year` INT, -- 年 month INT, -- 月 day INT, -- 日 holiday_type VARCHAR(20), -- 休暇の種類 FOREIGN KEY (staff_id) REFERENCES staff(staff_id) -- 外部キー制約 (staffテーブルのstaff_idを参照) ); [42001-232]
+2024-12-13 15:44:34.954525+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20),  -- 休暇タイプ
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約
+) [42001-232]
+2024-12-13 15:45:01.799051+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20),  -- 休暇タイプ
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約
+) [42001-232]
+2024-12-13 15:45:43.255965+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20),  -- 休暇タイプ
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約
+) [42001-232]
+2024-12-13 15:49:45.166036+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000aholiday_id int AUTO_INCREMENT PRIMARY KEY,\000d\000astaff_id int,\000d\000a`year` int,\000d\000a`month` int,\000d\000a`day` int,\000d\000aholiday_type varchar(20),\000d\000aFOREIGN key(staff_id) [*]REFERENCE staff(staff_id)\000d\000a)"; 期待されるステートメント "INDEX, REFERENCES"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000aholiday_id int AUTO_INCREMENT PRIMARY KEY,\000d\000astaff_id int,\000d\000a`year` int,\000d\000a`month` int,\000d\000a`day` int,\000d\000aholiday_type varchar(20),\000d\000aFOREIGN key(staff_id) [*]REFERENCE staff(staff_id)\000d\000a)"; expected "INDEX, REFERENCES"; SQL statement:
+CREATE TABLE holidays (
+holiday_id int AUTO_INCREMENT PRIMARY KEY,
+staff_id int,
+`year` int,
+`month` int,
+`day` int,
+holiday_type varchar(20),
+FOREIGN key(staff_id) REFERENCE staff(staff_id)
+) [42001-232]
+2024-12-13 15:50:16.724538+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000aholiday_id int AUTO_INCREMENT PRIMARY KEY,\000d\000astaff_id int,\000d\000a[*]year int,\000d\000amonth int,\000d\000aday int,\000d\000aholiday_type varchar(20),\000d\000aFOREIGN key(staff_id) REFERENCE staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000aholiday_id int AUTO_INCREMENT PRIMARY KEY,\000d\000astaff_id int,\000d\000a[*]year int,\000d\000amonth int,\000d\000aday int,\000d\000aholiday_type varchar(20),\000d\000aFOREIGN key(staff_id) REFERENCE staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+holiday_id int AUTO_INCREMENT PRIMARY KEY,
+staff_id int,
+year int,
+month int,
+day int,
+holiday_type varchar(20),
+FOREIGN key(staff_id) REFERENCE staff(staff_id)
+) [42001-232]
+2024-12-13 15:53:34.015946+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20),  -- 休暇タイプ
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約
+) [42001-232]
+2024-12-13 15:54:12.580927+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20)  -- 休暇タイプ\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20)  -- 休暇タイプ\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20)  -- 休暇タイプ
+) [42001-232]
+2024-12-13 15:55:03.341193+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20)  -- 休暇タイプ\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20)  -- 休暇タイプ\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20)  -- 休暇タイプ
+) [42001-232]
+2024-12-13 15:56:56.614731+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)\000d\000a    staff_id INT,  -- スタッフID\000d\000a    `year` INT,  -- 年\000d\000a    [*]month INT,  -- 月\000d\000a    day INT,  -- 日\000d\000a    holiday_type VARCHAR(20),  -- 休暇タイプ\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,  -- 希望休ID (自動採番)
+    staff_id INT,  -- スタッフID
+    `year` INT,  -- 年
+    month INT,  -- 月
+    day INT,  -- 日
+    holiday_type VARCHAR(20),  -- 休暇タイプ
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)  -- 外部キー制約
+) [42001-232]
+2024-12-13 15:59:22.050459+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    holiday_year INT,  -- 年を表現するカラム名を変更\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    holiday_year INT,  -- 年を表現するカラム名を変更\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    holiday_year INT,  -- 年を表現するカラム名を変更
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 16:00:17.553152+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    holiday_year INT,  -- 年を表現するカラム名を変更\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; 期待されるステートメント "identifier"
+Syntax error in SQL statement "CREATE TABLE holidays (\000d\000a    holiday_id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a    staff_id INT,\000d\000a    holiday_year INT,  -- 年を表現するカラム名を変更\000d\000a    [*]month INT,\000d\000a    day INT,\000d\000a    holiday_type VARCHAR(20),\000d\000a    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE holidays (
+    holiday_id INT AUTO_INCREMENT PRIMARY KEY,
+    staff_id INT,
+    holiday_year INT,  -- 年を表現するカラム名を変更
+    month INT,
+    day INT,
+    holiday_type VARCHAR(20),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+) [42001-232]
+2024-12-13 16:01:49.584161+09:00 database: flush
+org.h2.message.DbException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:344)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at dao.UserAccountsDAO.findByLogin(UserAccountsDAO.java:26)
+	at model.LoginLogic.execute(LoginLogic.java:13)
+	at servlet.LoginServlet.doPost(LoginServlet.java:35)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 44 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 38 more
+2024-12-13 16:01:56.817159+09:00 database: flush
+org.h2.message.DbException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:344)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at dao.UserAccountsDAO.findByLogin(UserAccountsDAO.java:26)
+	at model.LoginLogic.execute(LoginLogic.java:13)
+	at servlet.LoginServlet.doPost(LoginServlet.java:35)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 44 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 38 more

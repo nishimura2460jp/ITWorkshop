@@ -19,9 +19,9 @@
     <header>
         <h1>基本設定</h1>
     </header>
-    <a href="JobTypeFormServlet">業務の種類登録</a><br>
-    <a href="ShiftTypeFormServlet">シフトの種類登録</a><br>
-    <a href="StaffFormServlet">スタッフ登録</a><br>
+    <a href="JobTypeServlet">業務の種類登録</a><br>
+    <a href="ShiftTypeServlet">シフトの種類登録</a><br>
+    <a href="StaffServlet">スタッフ登録</a><br>
     
     <div class="return-main">
         <button onclick="location.href='WelcomeServlet'" class="return">TOPに戻る</button>

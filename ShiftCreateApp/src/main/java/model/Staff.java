@@ -9,6 +9,12 @@ public class Staff {
     private int shiftTypeId;
     private List<Integer> jobTypes;   // 複数選択された業務の種類（JobType ID）
 
+ // コンストラクタを追加
+    public Staff(int staffId, String staffName) {
+        this.staffId = staffId;
+        this.staffName = staffName;
+    }
+    
     // ゲッター・セッター
     public int getStaffId() {
         return staffId;

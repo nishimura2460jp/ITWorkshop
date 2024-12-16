@@ -6,24 +6,26 @@ import java.util.List;
 
 import dao.BasicSettingDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.JobType;
 import model.ShiftType;
 import model.Staff;
+@WebServlet("/StaffServlet")
 public class StaffServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // DBから業務の種類とシフトの種類を取得
-        List<JobType> jobTypes = BasicSettingDAO.getJobTypes();  // DBHelperで業務の種類を取得
-        List<ShiftType> shiftTypes = BasicSettingDAO.getShiftTypes();  // DBHelperでシフトの種類を取得
+        List<JobType> jobTypes = BasicSettingDAO.getJobTypes();  
+        List<ShiftType> shiftTypes = BasicSettingDAO.getShiftTypes(); 
         
         // 取得したデータをリクエスト属性として設定
         request.setAttribute("jobTypes", jobTypes);
         request.setAttribute("shiftTypes", shiftTypes);
         
         // スタッフ登録フォームを表示
-        request.getRequestDispatcher("/staffForm.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/staffForm.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +35,7 @@ public class StaffServlet extends HttpServlet {
         String[] jobTypeIds = request.getParameterValues("jobTypes");
 
         // JavaBeanを使用してスタッフ情報を格納
-        Staff staff = new Staff();
+        Staff staff = new Staff(shiftTypeId, staffName);
         staff.setStaffName(staffName);
         staff.setWeeklyWorkDays(weeklyWorkDays);
         staff.setShiftTypeId(shiftTypeId);
@@ -51,6 +53,6 @@ public class StaffServlet extends HttpServlet {
         BasicSettingDAO.addStaff(staff);
 
         // 登録後、基本設定画面にリダイレクト
-        response.sendRedirect("basicSetting.jsp");
+        response.sendRedirect("WEB-INF/jsp/basicSetting.jsp");
     }
 }

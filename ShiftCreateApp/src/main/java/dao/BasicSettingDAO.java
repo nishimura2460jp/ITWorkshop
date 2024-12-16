@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import model.Holiday;
 import model.JobType;
 import model.ShiftType;
 import model.Staff;
@@ -30,6 +33,35 @@ public class BasicSettingDAO {
 	            e.printStackTrace();
 	            throw new SQLException("DB connection error", e);
 	        }
+	    }
+	    
+	 // 休暇履歴を取得
+	    public static List<Holiday> getHolidayHistory(int staffId) {
+	        List<Holiday> holidayHistory = new ArrayList<>();
+	        
+	        String sql = "SELECT year, month, day, holiday_type FROM holidays WHERE staff_id = ? ORDER BY year DESC, month DESC, day DESC";
+
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            
+	            ps.setInt(1, staffId);  // staff_idをセット
+	            ResultSet rs = ps.executeQuery();
+	            
+	            while (rs.next()) {
+	                int year = rs.getInt("year");
+	                int month = rs.getInt("month");
+	                int day = rs.getInt("day");
+	                String holidayType = rs.getString("holiday_type");
+
+	                // 休暇情報をHolidayオブジェクトに格納
+	                Holiday holiday = new Holiday(year, month, day, holidayType);
+	                holidayHistory.add(holiday);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return holidayHistory;
 	    }
 	    
 	    //job_types テーブルに新しい業務の種類（job_name）を挿入
@@ -112,17 +144,35 @@ public class BasicSettingDAO {
 	    		        return shiftTypes;
 	    		    }
 	    		    
-	    		    // 休暇情報をDBに挿入
+	    		 // useraccountsのNAMEを元にstaff_idを取得
+	    		    public static int getStaffIdByUserName(String userName) {
+	    		        String sql = "SELECT staff_id FROM staff WHERE staff_name = ?";
+	    		        try (Connection conn = getConnection();
+	    		             PreparedStatement ps = conn.prepareStatement(sql)) {
+	    		            
+	    		            ps.setString(1, userName);  // useraccountsのNAMEをセット
+	    		            ResultSet rs = ps.executeQuery();
+	    		            
+	    		            if (rs.next()) {
+	    		                return rs.getInt("staff_id");  // 該当するstaff_idを返す
+	    		            }
+	    		        } catch (SQLException e) {
+	    		            e.printStackTrace();
+	    		        }
+	    		        return -1;  // 該当するstaff_idがない場合は-1を返す
+	    		    }
+	    		    
+	    		 // 休暇情報をDBに挿入
 	    		    public static void addHoliday(int staffId, int year, int month, int day, String holidayType) {
 	    		        String sql = "INSERT INTO holidays (staff_id, year, month, day, holiday_type) VALUES (?, ?, ?, ?, ?)";
 	    		        try (Connection conn = getConnection();
 	    		             PreparedStatement ps = conn.prepareStatement(sql)) {
 	    		            
-	    		            ps.setInt(1, staffId);
-	    		            ps.setInt(2, year);
-	    		            ps.setInt(3, month);
-	    		            ps.setInt(4, day);
-	    		            ps.setString(5, holidayType);
+	    		            ps.setInt(1, staffId);   // 有効なstaff_idをセット
+	    		            ps.setInt(2, year);      // yearをセット
+	    		            ps.setInt(3, month);     // monthをセット
+	    		            ps.setInt(4, day);       // dayをセット
+	    		            ps.setString(5, holidayType); // holidayTypeをセット
 	    		            
 	    		            ps.executeUpdate();  // データを挿入
 	    		        } catch (SQLException e) {
@@ -130,14 +180,99 @@ public class BasicSettingDAO {
 	    		        }
 	    		    }
 
-	    		 // スタッフをDBに登録
-	    		    public static void addStaff(Staff staff) {
-	    		        // Connectionを取得
+	    		    // スタッフIDが有効かどうかをチェックするメソッド
+	    		    private static boolean isValidStaffId(int staffId) {
+	    		        String sql = "SELECT COUNT(*) FROM staff WHERE staff_id = ?";
+	    		        try (Connection conn = getConnection();
+	    		             PreparedStatement ps = conn.prepareStatement(sql)) {
+	    		            
+	    		            ps.setInt(1, staffId);
+	    		            ResultSet rs = ps.executeQuery();
+	    		            
+	    		            if (rs.next()) {
+	    		                return rs.getInt(1) > 0;  // 存在する場合はtrueを返す
+	    		            }
+	    		        } catch (SQLException e) {
+	    		            e.printStackTrace();
+	    		        }
+	    		        return false;  // 存在しない場合はfalseを返す
+	    		    }
+
+	    		 // useraccountsとstaffのnameを比較して、両者をstaff_user_mappingテーブルに関連付け
+	    		    public static void linkUseraccountsToStaff() {
 	    		        try (Connection conn = getConnection()) {
+	    		            // 1. ユーザーアカウントとスタッフを名前で紐づける
+	    		            String selectUseraccountsSql = "SELECT id, name FROM useraccounts";
+	    		            String selectStaffSql = "SELECT staff_id, staff_name FROM staff";
+
+	    		            // ユーザーアカウントを取得
+	    		            Map<String, Integer> userAccounts = new HashMap<>();
+	    		            try (PreparedStatement ps = conn.prepareStatement(selectUseraccountsSql);
+	    		                 ResultSet rs = ps.executeQuery()) {
+	    		                while (rs.next()) {
+	    		                    String userName = rs.getString("name");
+	    		                    int userId = rs.getInt("id");
+	    		                    // 名前を標準化して格納
+	    		                    userAccounts.put(normalizeName(userName), userId);
+	    		                }
+	    		            }
+
+	    		            // スタッフを取得
+	    		            List<Staff> staffList = new ArrayList<>();
+	    		            try (PreparedStatement ps = conn.prepareStatement(selectStaffSql);
+	    		                 ResultSet rs = ps.executeQuery()) {
+	    		                while (rs.next()) {
+	    		                    int staffId = rs.getInt("staff_id");
+	    		                    String staffName = rs.getString("staff_name");
+	    		                    // スタッフ情報をリストに追加
+	    		                    staffList.add(new Staff(staffId, normalizeName(staffName)));
+	    		                }
+	    		            }
+
+	    		            // 2. バッチ処理で useraccounts と staff を紐づける
+	    		            String insertMappingSql = "INSERT INTO staff_user_mapping (useraccount_id, staff_id, name) VALUES (?, ?, ?)";
+	    		            try (PreparedStatement psMapping = conn.prepareStatement(insertMappingSql)) {
+	    		                for (Staff staff : staffList) {
+	    		                    // 標準化したスタッフ名に一致するユーザーアカウントがある場合
+	    		                    Integer userId = userAccounts.get(staff.getStaffName());
+	    		                    if (userId != null) {
+	    		                        // useraccounts と staff を紐づけ
+	    		                        psMapping.setInt(1, userId);       // useraccount_id
+	    		                        psMapping.setInt(2, staff.getStaffId()); // staff_id
+	    		                        psMapping.setString(3, staff.getStaffName());  // name
+	    		                        psMapping.addBatch();  // バッチに追加
+	    		                    }
+	    		                }
+	    		                psMapping.executeBatch();  // バッチ実行
+	    		            }
+	    		        } catch (SQLException e) {
+	    		            e.printStackTrace();
+	    		        }
+	    		    }
+
+	    		    // 名前を標準化するメソッド（全角・半角スペース削除）
+	    		    public static String normalizeName(String name) {
+	    		        // スペースを削除し、全角から半角に変換
+	    		        name = name.replaceAll("　", " ").replaceAll("\\s", "").trim();
+	    		        
+	    		        // 半角に変換（全角→半角）
+	    		        name = java.text.Normalizer.normalize(name, java.text.Normalizer.Form.NFKC);
+	    		        
+	    		        return name;
+	    		    }
+
+	    		    
+
+	    		    // スタッフをDBに登録する際に名前を標準化
+	    		    public static void addStaff(Staff staff) {
+	    		        try (Connection conn = getConnection()) {
+	    		            // スタッフ名を標準化
+	    		            String normalizedStaffName = normalizeName(staff.getStaffName());
+	    		            
 	    		            // 1. スタッフ情報を登録する
 	    		            String staffSql = "INSERT INTO staff (staff_name, weekly_work_days, shift_type_id) VALUES (?, ?, ?)";
 	    		            try (PreparedStatement ps = conn.prepareStatement(staffSql, Statement.RETURN_GENERATED_KEYS)) {
-	    		                ps.setString(1, staff.getStaffName());
+	    		                ps.setString(1, normalizedStaffName);
 	    		                ps.setInt(2, staff.getWeeklyWorkDays());
 	    		                ps.setInt(3, staff.getShiftTypeId());
 	    		                ps.executeUpdate();
@@ -161,11 +296,11 @@ public class BasicSettingDAO {
 	    		                        psJobSkill.executeBatch();  // バッチ実行
 	    		                    }
 	    		                }
-	    		            } catch (SQLException e) {
-	    		                e.printStackTrace();
 	    		            }
 	    		        } catch (SQLException e) {
 	    		            e.printStackTrace();
 	    		        }
 	    		    }
-}
+	    		    }
+	    		    
+

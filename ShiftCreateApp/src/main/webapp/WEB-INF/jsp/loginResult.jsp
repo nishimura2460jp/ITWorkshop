@@ -87,8 +87,8 @@
         <% } %>
     </table>
 
-    <a href="CalendarServlet?year=<%= year %>&month=<%= month - 1 %>">前の月</a>
-    <a href="CalendarServlet?year=<%= year %>&month=<%= month + 1 %>">次の月</a>
+  <a href="CalendarServlet?year=<%= (month == 0 ? year - 1 : year) %>&month=<%= (month == 0 ? 11 : month - 1) %>">前の月</a>
+  <a href="CalendarServlet?year=<%= (month == 11 ? year + 1 : year) %>&month=<%= (month == 11 ? 0 : month + 1) %>">次の月</a>
     
 
     

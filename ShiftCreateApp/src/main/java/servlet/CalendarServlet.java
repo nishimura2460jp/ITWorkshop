@@ -22,8 +22,18 @@ public class CalendarServlet extends HttpServlet {
 	        String vacationParam = request.getParameter("vacation");
 
 	        // 年、月、日を処理する
-	        int year = (yearParam != null) ? Integer.parseInt(yearParam) : Calendar.getInstance().get(Calendar.YEAR);
-	        int month = (monthParam != null) ? Integer.parseInt(monthParam) : Calendar.getInstance().get(Calendar.MONTH);
+	        int year = Calendar.getInstance().get(Calendar.YEAR); // デフォルト値として現在の年
+	        int month = Calendar.getInstance().get(Calendar.MONTH); // デフォルト値として現在の月
+
+	        // year パラメータが存在しており、正しい形式なら変換
+	        if (yearParam != null && yearParam.matches("\\d{4}")) { // 4桁の年の形式かチェック
+	            year = Integer.parseInt(yearParam);
+	        }
+
+	        // month パラメータが存在しており、正しい形式なら変換
+	        if (monthParam != null && monthParam.matches("\\d")) { // 0-9 の1桁の月の形式かチェック
+	            month = Integer.parseInt(monthParam);
+	        }
 
 	        // 日付を指定された場合、その日付もリクエストにセット
 	        if (dateParam != null) {

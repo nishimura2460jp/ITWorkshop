@@ -5,7 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>シフト表作成-スタッフ登録</title>
+ <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&display=swap" rel="stylesheet">
+    <script src="js/script.js"></script>
 </head>
 <body>
 <h1>スタッフ登録</h1>
@@ -17,9 +22,10 @@
       <select name="jobTypes" multiple size="5">
         <!-- 業務の種類のデータはサーブレットで取得し表示 -->
         <c:forEach var="job" items="${jobTypes}">
-          <option value="${job.id}">${job.job_name}</option>
+          <option value="${job.jobId}">${job.jobName}</option>
         </c:forEach>
       </select><br><br>
+      <p>複数選択可能(Ctrl)</p>
 
       <label>勤務形態（週○日勤務）:</label>
       <select name="weeklyWorkDays">
@@ -34,7 +40,7 @@
       <select name="shiftType">
         <!-- シフトの種類のデータもサーブレットで取得し表示 -->
         <c:forEach var="shift" items="${shiftTypes}">
-          <option value="${shift.id}">${shift.shift_name}</option>
+          <option value="${shift.shiftId}">${shift.shiftName}</option>
         </c:forEach>
       </select><br><br>
 

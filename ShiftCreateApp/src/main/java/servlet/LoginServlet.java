@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 		if(result) {  //ログイン成功時
 			// セッションスコープにユーザー名を保存
 			HttpSession session = request.getSession();
-			session.setAttribute("name", name);
+			session.setAttribute("name", name);  // Userオブジェクトをセッションに保存
 		
 			// 現在の年と月を取得
 	        java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -59,6 +59,7 @@ public class LoginServlet extends HttpServlet {
 		
 	}else {   // ログイン失敗時
 	// リダイレクト
+		request.setAttribute("errorMessage", "ユーザー名またはパスワードが間違っています。");
 		response.sendRedirect("LoginServlet");
 	}
 }

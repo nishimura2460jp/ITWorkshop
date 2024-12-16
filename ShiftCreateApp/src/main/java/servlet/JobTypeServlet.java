@@ -15,13 +15,13 @@ public class JobTypeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<JobType> jobTypes = BasicSettingDAO.getJobTypes();
         request.setAttribute("jobTypes", jobTypes);
-        request.getRequestDispatcher("/jobTypeForm.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/jobTypeForm.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jobName = request.getParameter("jobName");
         BasicSettingDAO.addJobType(jobName);
 
-        response.sendRedirect("basicSetting.jsp");
+        response.sendRedirect("WEB-INF/jsp/basicSetting.jsp");
     }
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,21 +21,21 @@
 
     <h2>登録済みのシフトの種類</h2>
     <!-- shiftTypes が空でない場合のみ表示 -->
-    <select>
-        <c:if test="${not empty shiftTypes}">
-         <ul>
-            <c:forEach var="shift" items="${shiftTypes}">
-                <li>${shift.shiftName}</li>
-            </c:forEach>
-        </ul>
-            </c:forEach>
-        </c:if>
-        <!-- shiftTypes が空の場合のメッセージ -->
+    <c:if test="${not empty shiftTypes}"> 
+    <ul>
+     <c:forEach var="shift" items="${shiftTypes}">
+      <li>${shift.shiftName}</li>
+       </c:forEach> 
+       </ul> 
+       </c:if>
+        <!-- shiftTypes が空の場合のみ表示 -->
         <c:if test="${empty shiftTypes}">
-            <option disabled>シフトの種類は登録されていません。</option>
-        </c:if>
-    </select>
-
+         <option disabled>シフトの種類は登録されていません。</option>
+          </c:if>
+          
+	<div class="return-basicsetting">
+        <button onclick="location.href='BasicSettingServlet'" class="return">基本設定に戻る</button>
+    </div>
 <jsp:include page="footer.jsp" />
 </body>
 </html>

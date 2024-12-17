@@ -193,6 +193,26 @@ text-align: center;
     background-color:#ffd700;
 }
 
+/* 曜日指定チェックボックスを横並びにする */
+form .weekdays-checkboxes {
+    display: flex;
+    flex-wrap: wrap; /* 行がいっぱいになった場合は折り返す */
+    gap: 15px; /* チェックボックス間のスペースを設定 */
+}
+
+form .weekdays-checkboxes input,
+form .weekdays-checkboxes label {
+    display: inline-flex; /* 横並びにするためにインラインフレックスに */
+    align-items: center; /* チェックボックスとラベルを縦方向で揃える */
+    margin: 0; /* 余分なマージンを削除 */
+}
+
+form .weekdays-checkboxes label {
+    margin-right: 10px; /* チェックボックスとラベル間にスペースを設定 */
+}
+
+
+
 /* カレンダーの基本スタイル */
 #calendar-container {
     max-width: 300px;

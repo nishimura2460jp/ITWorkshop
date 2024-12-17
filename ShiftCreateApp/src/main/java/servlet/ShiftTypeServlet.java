@@ -40,6 +40,6 @@ public class ShiftTypeServlet extends HttpServlet {
         BasicSettingDAO.addShiftType(shiftName);
 
         // 登録後、基本設定ページにリダイレクト
-        response.sendRedirect("WEB-INF/jsp/basicSetting.jsp");
+        response.sendRedirect("BasicSettingServlet");
     }
 }

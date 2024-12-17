@@ -906,3 +906,144 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 38 more
+2024-12-17 11:17:19.159112+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "ALTER TABLE job_types [*]AUTO_INCREMENT = <最大値+1>"; 期待されるステートメント "., ADD, SET, RENAME, DROP, ALTER"
+Syntax error in SQL statement "ALTER TABLE job_types [*]AUTO_INCREMENT = <最大値+1>"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE job_types AUTO_INCREMENT = <最大値+1> [42001-232]
+2024-12-17 11:19:59.290873+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: "CONSTRAINT_E49" が依存しているため、"JOB_TYPES" をドロップすることはできません
+Cannot drop "JOB_TYPES" because "CONSTRAINT_E49" depends on it; SQL statement:
+DROP TABLE job_types [90107-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:108)
+	at org.h2.command.ddl.DropTable.update(DropTable.java:133)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
+	at org.h2.command.Command.executeUpdate(Command.java:304)
+	at org.h2.command.Command.executeUpdate(Command.java:248)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1108)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1095)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-12-17 11:21:45.395260+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "SHOW [*]CREATE TABLE job_types"
+Syntax error in SQL statement "SHOW [*]CREATE TABLE job_types"; SQL statement:
+SHOW CREATE TABLE job_types [42000-232]
+2024-12-17 11:35:52.657012+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "[*]DBCC CHECKIDENT ('job_types', RESEED, 10)"; 期待されるステートメント "DELETE, DROP"
+Syntax error in SQL statement "[*]DBCC CHECKIDENT ('job_types', RESEED, 10)"; expected "DELETE, DROP"; SQL statement:
+DBCC CHECKIDENT ('job_types', RESEED, 10) [42001-232]
+2024-12-17 11:42:36.627212+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: "PUBLIC.JOB_TYPES" を空にできません
+Cannot truncate "PUBLIC.JOB_TYPES"; SQL statement:
+TRUNCATE TABLE job_types [90106-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.ddl.TruncateTable.update(TruncateTable.java:42)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
+	at org.h2.command.Command.executeUpdate(Command.java:304)
+	at org.h2.command.Command.executeUpdate(Command.java:248)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1344)
+	at org.h2.server.web.WebApp.query(WebApp.java:1142)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1108)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1095)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-12-17 11:52:18.799102+09:00 database: flush
+org.h2.message.DbException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:344)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at dao.BasicSettingDAO.getConnection(BasicSettingDAO.java:29)
+	at dao.BasicSettingDAO.getJobTypes(BasicSettingDAO.java:87)
+	at servlet.JobTypeServlet.doGet(JobTypeServlet.java:16)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: 一般エラー: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]" [50000-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 44 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/8Java32/Desktop/SQL/shiftCreate.mv.db [2.3.232/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 38 more
+2024-12-17 13:44:22.061747+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: SQLステートメントに文法エラーがあります "DELETE\000d\000a  FROM STAFF_JOB_SKILLS\000d\000a WHERE STAFF_ID = 33[*],34,35"
+Syntax error in SQL statement "DELETE\000d\000a  FROM STAFF_JOB_SKILLS\000d\000a WHERE STAFF_ID = 33[*],34,35"; SQL statement:
+DELETE
+  FROM STAFF_JOB_SKILLS
+ WHERE STAFF_ID = 33,34,35 [42000-232]
+2024-12-17 16:11:30.830776+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: テーブル "SHIFT_TYPE" が見つかりません
+Table "SHIFT_TYPE" not found; SQL statement:
+CREATE TABLE shift (
+    shift_id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT,
+    shift_type_id INT,
+    shift_date DATE NOT NULL,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id),
+    FOREIGN KEY (shift_type_id) REFERENCES shift_type(shift_type_id)
+) [42102-232]
+2024-12-17 16:12:13.509050+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: テーブル "SHIFT_TYPE" が見つかりません
+Table "SHIFT_TYPE" not found; SQL statement:
+CREATE TABLE shift (
+    shift_id INT PRIMARY KEY AUTO_INCREMENT,
+    staff_id INT,
+    shift_type_id INT,
+    shift_date DATE NOT NULL,
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id),
+    FOREIGN KEY (shift_types_id) REFERENCES shift_type(shift_types_id)
+) [42102-232]

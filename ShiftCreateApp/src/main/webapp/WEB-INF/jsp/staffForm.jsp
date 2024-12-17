@@ -45,8 +45,28 @@
       </select><br><br>
 
       <input type="submit" value="登録">
-    </form>
+    </form><br>
     
+    <h3>登録済みスタッフ一覧</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>勤務日数 (週)</th>
+            <th>シフト種類</th>
+        </tr>
+        <c:forEach var="staff" items="${staffList}">
+            <tr>
+                <td>${staff.staffId}</td>
+                <td>${staff.staffName}</td>
+                <td>${staff.weeklyWorkDays}</td>
+                <td>${staff.shiftName}</td>
+            </tr>
+        </c:forEach>
+    </table>
+    <div class="return-basicsetting">
+        <button onclick="location.href='BasicSettingServlet'" class="return">基本設定に戻る</button>
+    </div>
  <jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -66,44 +66,41 @@ public class BasicSettingDAO {
 	    
 	    //job_types テーブルに新しい業務の種類（job_name）を挿入
 	    public static void addJobType(String jobName) {
+	        String sql = "INSERT INTO job_types (job_name) VALUES (?)";  // job_idは指定しない
 	        try (Connection conn = getConnection();
-	             PreparedStatement ps = conn.prepareStatement(
-	                 "INSERT INTO job_types (job_name) VALUES (?)",
-	                 Statement.RETURN_GENERATED_KEYS)) {
-	            
-	            // パラメータをセット
-	            ps.setString(1, jobName);
-	            ps.executeUpdate();
-
-	            // 生成されたキー（ID）を取得（必要に応じて）
-	            ResultSet rs = ps.getGeneratedKeys();
-	            if (rs.next()) {
-	                int jobTypeId = rs.getInt(1);
-	                // jobTypeIdを使って処理を続ける場合
-	            }
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            System.out.println("Inserting job name: " + jobName); // デバッグ情報
+	            ps.setString(1, jobName);  // job_nameのみセット
+	            int result = ps.executeUpdate();
+	            System.out.println("Insert result: " + result); // デバッグ情報
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	    }
-	    
-	    		    // 業務の種類を取得
-	    		    public static List<JobType> getJobTypes() {
-	    		        List<JobType> jobTypes = new ArrayList<>();
-	    		        try (Connection conn = getConnection();
-	    		             PreparedStatement ps = conn.prepareStatement("SELECT * FROM job_types");
-	    		             ResultSet rs = ps.executeQuery()) {
-	    		            while (rs.next()) {
-	    		                JobType jobType = new JobType();
-	    		                jobType.setJobId(rs.getInt("job_id"));
-	    		                jobType.setJobName(rs.getString("job_name"));
-	    		                jobTypes.add(jobType);
-	    		            }
-	    		        } catch (SQLException e) {
-	    		            e.printStackTrace();
-	    		        }
-	    		        return jobTypes;
-	    		    }
 
+	    
+	    // 業務の種類を取得
+	    	public static List<JobType> getJobTypes() {
+	    	List<JobType> jobTypes = new ArrayList<>();
+	    	String sql = "SELECT job_id, job_name, staff_required FROM job_types";
+
+	    	try (Connection conn = getConnection();
+	    	PreparedStatement ps = conn.prepareStatement("SELECT * FROM job_types");
+	    	ResultSet rs = ps.executeQuery()) {
+	    	while (rs.next()) {
+	    	JobType jobType = new JobType();
+	    	jobType.setJobId(rs.getInt("job_id"));
+	    	jobType.setJobName(rs.getString("job_name"));
+	    	jobType.setStaffRequired(rs.getInt("staff_required"));
+	    	jobTypes.add(jobType);
+	    	}
+	    	} catch (SQLException e) {
+	    		  e.printStackTrace();
+	    	}
+
+	    		  return jobTypes;
+	    	}
+	    		    
 	    		    // shift_types テーブルに新しいシフトの種類（shift_name）を挿入
 	    		    public static void addShiftType(String shiftName) {
 	    		        try (Connection conn = getConnection();
@@ -261,15 +258,26 @@ public class BasicSettingDAO {
 	    		        return name;
 	    		    }
 
-	    		    
-
 	    		    // スタッフをDBに登録する際に名前を標準化
 	    		    public static void addStaff(Staff staff) {
 	    		        try (Connection conn = getConnection()) {
 	    		            // スタッフ名を標準化
 	    		            String normalizedStaffName = normalizeName(staff.getStaffName());
 	    		            
-	    		            // 1. スタッフ情報を登録する
+	    		         // 1. 既存のスタッフが存在するか確認
+	    		            String checkSql = "SELECT COUNT(*) FROM staff WHERE staff_name = ? AND shift_type_id = ?";
+	    		            try (PreparedStatement psCheck = conn.prepareStatement(checkSql)) {
+	    		                psCheck.setString(1, normalizedStaffName);
+	    		                psCheck.setInt(2, staff.getShiftTypeId());
+	    		                ResultSet rs = psCheck.executeQuery();
+	    		                if (rs.next() && rs.getInt(1) > 0) {
+	    		                    // 既存のスタッフが見つかった場合、重複登録しない
+	    		                    System.out.println("スタッフはすでに登録されています: " + staff.getStaffName());
+	    		                    return;  // 重複しないように登録処理をスキップ
+	    		                }
+	    		            }
+
+	    		            // 2. スタッフ情報を登録する
 	    		            String staffSql = "INSERT INTO staff (staff_name, weekly_work_days, shift_type_id) VALUES (?, ?, ?)";
 	    		            try (PreparedStatement ps = conn.prepareStatement(staffSql, Statement.RETURN_GENERATED_KEYS)) {
 	    		                ps.setString(1, normalizedStaffName);
@@ -277,14 +285,14 @@ public class BasicSettingDAO {
 	    		                ps.setInt(3, staff.getShiftTypeId());
 	    		                ps.executeUpdate();
 
-	    		                // 2. 生成されたスタッフIDを取得
+	    		                // 3. 生成されたスタッフIDを取得
 	    		                ResultSet rs = ps.getGeneratedKeys();
 	    		                int staffId = -1;
 	    		                if (rs.next()) {
 	    		                    staffId = rs.getInt(1);
 	    		                }
 
-	    		                // 3. 業務の種類（JobTypes）をスタッフに紐づけ
+	    		                // 4. 業務の種類（JobTypes）をスタッフに紐づけ
 	    		                if (staff.getJobTypes() != null && staffId != -1) {
 	    		                    String jobSkillSql = "INSERT INTO staff_job_skills (staff_id, job_type_id) VALUES (?, ?)";
 	    		                    try (PreparedStatement psJobSkill = conn.prepareStatement(jobSkillSql)) {
@@ -301,6 +309,30 @@ public class BasicSettingDAO {
 	    		            e.printStackTrace();
 	    		        }
 	    		    }
-	    		    }
+	    		    
+	    		     // スタッフ一覧を取得
+	    		        public static List<Staff> getAllStaff() {
+	    		            List<Staff> staffList = new ArrayList<>();
+	    		            String sql = "SELECT s.staff_id, s.staff_name, s.weekly_work_days, st.shift_name " +
+	    		                         "FROM staff s " +
+	    		                         "JOIN shift_types st ON s.shift_type_id = st.shift_id";
+
+	    		            try (Connection conn = getConnection();
+	    		                 PreparedStatement ps = conn.prepareStatement(sql);
+	    		                 ResultSet rs = ps.executeQuery()) {
+	    		                while (rs.next()) {
+	    		                    Staff staff = new Staff();
+	    		                    staff.setStaffId(rs.getInt("staff_id"));
+	    		                    staff.setStaffName(rs.getString("staff_name"));
+	    		                    staff.setWeeklyWorkDays(rs.getInt("weekly_work_days"));
+	    		                    staff.setShiftName(rs.getString("shift_name")); // Shift name を Staff モデルに追加
+	    		                    staffList.add(staff);
+	    		                }
+	    		            } catch (SQLException e) {
+	    		                e.printStackTrace();
+	    		            }
+	    		            return staffList;
+	    		        }
+}
 	    		    
 

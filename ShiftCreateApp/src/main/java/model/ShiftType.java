@@ -3,6 +3,15 @@ package model;
 public class ShiftType {
     private int shiftId;
     private String shiftName;
+    private String startTime;
+    private String endTime;
+
+    public ShiftType(int shiftId, String shiftName, String startTime, String endTime) {
+        this.shiftId = shiftId;
+        this.shiftName = shiftName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
     // コンストラクタ
     public ShiftType() {}
@@ -23,4 +32,6 @@ public class ShiftType {
     public void setShiftName(String shiftName) {
         this.shiftName = shiftName;
     }
+    public String getStartTime() { return startTime; }
+    public String getEndTime() { return endTime; }
 }

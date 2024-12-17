@@ -17,17 +17,19 @@ import model.Staff;
 public class StaffServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // DBから業務の種類とシフトの種類を取得
-        List<JobType> jobTypes = BasicSettingDAO.getJobTypes();  
-        List<ShiftType> shiftTypes = BasicSettingDAO.getShiftTypes(); 
+    	List<Staff> staffList = BasicSettingDAO.getAllStaff();
+        List<JobType> jobTypes = BasicSettingDAO.getJobTypes();
+        List<ShiftType> shiftTypes = BasicSettingDAO.getShiftTypes();
         
         // 取得したデータをリクエスト属性として設定
         request.setAttribute("jobTypes", jobTypes);
         request.setAttribute("shiftTypes", shiftTypes);
+        request.setAttribute("staffList", staffList);
         
         // スタッフ登録フォームを表示
         request.getRequestDispatcher("/WEB-INF/jsp/staffForm.jsp").forward(request, response);
-    }
-
+    
+}
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String staffName = request.getParameter("staffName");
         int weeklyWorkDays = Integer.parseInt(request.getParameter("weeklyWorkDays"));
@@ -53,6 +55,6 @@ public class StaffServlet extends HttpServlet {
         BasicSettingDAO.addStaff(staff);
 
         // 登録後、基本設定画面にリダイレクト
-        response.sendRedirect("WEB-INF/jsp/basicSetting.jsp");
+        request.getRequestDispatcher("/WEB-INF/jsp/basicSetting.jsp").forward(request, response);
     }
 }

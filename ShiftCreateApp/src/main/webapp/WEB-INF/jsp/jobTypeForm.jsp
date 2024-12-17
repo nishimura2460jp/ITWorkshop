@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,29 @@
       <input type="submit" value="登録">
     </form>
 
+ <!-- 登録済業務の表示 -->
+    <h3>登録済み業務リスト</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>業務ID</th>
+                <th>業務名</th>
+                <th>必要スタッフ数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="jobType" items="${jobTypes}">
+                <tr>
+                    <td>${jobType.jobId}</td>
+                    <td>${jobType.jobName}</td>
+                    <td>${jobType.staffRequired}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <div class="return-basicsetting">
+        <button onclick="location.href='BasicSettingServlet'" class="return">基本設定に戻る</button>
+    </div>
 <jsp:include page="footer.jsp" />
 </body>
 </html>

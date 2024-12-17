@@ -7,9 +7,12 @@ public class Staff {
     private String staffName;
     private int weeklyWorkDays;
     private int shiftTypeId;
+    private String shiftName; // 追加: シフト名
     private List<Integer> jobTypes;   // 複数選択された業務の種類（JobType ID）
 
- // コンストラクタを追加
+    public Staff() {}
+    
+    // コンストラクタを追加
     public Staff(int staffId, String staffName) {
         this.staffId = staffId;
         this.staffName = staffName;
@@ -48,6 +51,14 @@ public class Staff {
         this.shiftTypeId = shiftTypeId;
     }
 
+    public String getShiftName() { // 追加: シフト名のゲッター
+        return shiftName;
+    }
+
+    public void setShiftName(String shiftName) { // 追加: シフト名のセッター
+        this.shiftName = shiftName;
+    }
+
     public List<Integer> getJobTypes() {
         return jobTypes;
     }
@@ -56,5 +67,3 @@ public class Staff {
         this.jobTypes = jobTypes;
     }
 }
-
-

@@ -22,6 +22,6 @@ public class JobTypeServlet extends HttpServlet {
         String jobName = request.getParameter("jobName");
         BasicSettingDAO.addJobType(jobName);
 
-        response.sendRedirect("WEB-INF/jsp/basicSetting.jsp");
+        response.sendRedirect("BasicSettingServlet");
     }
 }
